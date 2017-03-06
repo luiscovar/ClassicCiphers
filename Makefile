@@ -1,20 +1,25 @@
 all:	cipher
 
-cipher:	cipher.o Caesar.o
-	g++ cipher.o Caesar.o -o cipher -std=c++11
+cipher:	cipher.o Caesar.o Playfair.o Vignere.o RowTransposition.o Railfence.o
+	g++ cipher.o caesar.o playfair.o vignere.o rowTransposition.o railfence.o -o cipher -std=c++11
 
 cipher.o:	cipher.cpp
 	g++ -g -c cipher.cpp -std=c++11
 
-#Playfair.o:	Playfair.cpp Playfair.h CipherInterface.h
-#	g++ -g -c Playfair.cpp
+Playfair.o:	Playfair.cpp Playfair.h CipherInterface.h
+	g++ -g -c Playfair.cpp -std=c++11
 
 Caesar.o: Caesar.cpp Caesar.h CipherInterface.h
 	g++ -g -c Caesar.cpp -std=c++11
-# Uncomment this code once you add the appropriate files
-#RowTransposition.o:	RowTransposition.cpp RowTransposition.h
-#	g++ -g -c RowTransposition.cpp
 
+RowTransposition.o:	RowTransposition.cpp RowTransposition.h
+	g++ -g -c RowTransposition.cpp -std=c++11
+
+Railfence.o: Railfence.cpp Railfence.h
+	g++ -g -c Railfence.cpp -std=c++11
+
+Vignere.o: Vignere.cpp Vignere.h
+	g++ -g -c Vignere.cpp -std=c++11
 
 clean:
-	rm -rf *.o cipher
+	rm -rf *.o *.gch cipher

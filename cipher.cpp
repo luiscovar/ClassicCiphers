@@ -1,8 +1,11 @@
 #include <string>
 #include "CipherInterface.h"
-//#include "Playfair.h"
+#include "Playfair.h"
 #include "Caesar.h"
 #include <sstream>
+#include "Railfence.h"
+#include "Vignere.h"
+#include "RowTransposition.h"
 #include <fstream>
 
 
@@ -37,6 +40,11 @@ int main(int argc, char** argv)
     //read contents of the file
     ifstream inFile;
     inFile.open(inputFile);
+    if(!inFile.is_open())
+    {
+        cout << "Could Not Open FIle\n";
+        return 0;
+    }
     stringstream strStream;
     strStream << inFile.rdbuf();
     string inputText = strStream.str();
@@ -54,17 +62,41 @@ int main(int argc, char** argv)
         //if key isnt validated exit
         if(cipher->setKey(key) == false)
             return 0;
-
-        if(option == "DEC")
-            outputText = cipher->decrypt(inputText);
-        else
-            outputText = cipher->encrypt(inputText);
     }
     else if(ciphertype == "PLF")
     {
-        cout << "Playfair Chosen";
+        cipher = new Playfair();
+        //if key isnt validated exit
+        if(cipher->setKey(key) == false)
+            return 0;
+    }
+    else if(ciphertype == "VIG")
+    {
+        cipher = new Vignere();
+        //if key isnt validated exit
+        if(cipher->setKey(key) == false)
+            return 0;
+    }
+    else if(ciphertype == "RFC")
+    {
+        cipher = new Railfence();
+        //if key isnt validated exit
+        if(cipher->setKey(key) == false)
+            return 0;
+    }
+    else if(ciphertype == "RTS")
+    {
+        cipher = new RowTransposition();
+        //if key isnt validated exit
+        if(cipher->setKey(key) == false)
+            return 0;
     }
 
+    //Do Encryption or Decrpytion
+    if(option == "DEC")
+        outputText = cipher->decrypt(inputText);
+    else
+        outputText = cipher->encrypt(inputText);
 
     ofstream outputFile;
     outputFile.open(outputFile_Name);

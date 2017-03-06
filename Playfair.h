@@ -2,6 +2,9 @@
 #define PLAYFAIR_H
 
 #include <vector>   /* For vectors */
+#include <map>
+#include <iostream>
+#include <unordered_set>
 #include <string>   /* For C++ strings */
 #include <stdio.h>  /* For standard I/O */
 #include <stdlib.h> /* For miscellenous C functions */
@@ -19,6 +22,8 @@ class Playfair: public CipherInterface
 {
 	/** The public members **/
 	public:
+        Playfair() {}
+        ~Playfair() {}
 
 		/**
 		 * Sets the key to use
@@ -45,11 +50,25 @@ class Playfair: public CipherInterface
 		 * Prints the Playfair matrix
 		 * @param fp - the file pointer
 		 */
-		void printMatrix(FILE* fp);
+		//void printMatrix(FILE* fp);
 		
 		/* The protected members */
 	protected:
-	
+        string _key;
+        vector<vector<string>> matrix;
+
+    private:
+        map<char,int> lettersUsed;
+        vector<vector<string>> doMatrix(); 
+        void initMap();
+        void displayMatrix();
+        string pairUp(string plaintext);
+        bool findLocation(int &x, int &y, string letter);
+        void moveVertical(string &text, pair<int,int> firstLetter, pair<int,int> secondLetter, bool decrypt);
+        void moveHorizontal(string &text, pair<int,int> firstLetter, pair<int,int> secondLetter, bool decrypt);
+        void move(string &text, pair<int,int> firstLetter, pair<int,int> secondLetter, bool decrypt);
+        bool doAction(bool decrypt, string pairedText, string &outputText);
+
 
 };
 
