@@ -37,7 +37,7 @@ string RowTransposition::encrypt(const string& plaintext)
         if(isalpha(c))
             sanitizedText += toupper(c);
     }
-	int rows = (sanitizedText.size() / secretKey.size()) + 1;
+	int rows = (sanitizedText.size() / secretKey.size() + 1);
 	int col;
 	vector<vector<char>> charMatrix(rows, vector<char>(secretKey.size()));
 	string result = "";
@@ -47,15 +47,25 @@ string RowTransposition::encrypt(const string& plaintext)
 		for (int j = 0; j < secretKey.size(); j++, index++){
 			if (index < sanitizedText.size())
 				charMatrix[i][j] = sanitizedText[index];
+            else
+                charMatrix[i][j] += 'X';
 		}
 	}
+
+    /*
+    for(int i = 0; i < rows; i++)
+    {
+        cout << endl;
+        for(int j = 0; j < secretKey.size(); j++)
+            cout << charMatrix[i][j] << " ";
+    }
+    */
 
 	index = 0;
 	for (int i = 0; i < secretKey.size(); i++){
 		col = (secretKey[i] - '0')-1;
 		for (int j = 0; j < rows; j++, index++){
-			if (charMatrix[j][col] != NULL)
-				result += charMatrix[j][col];
+            result += charMatrix[j][col];
 		}
 	}
 	return result;
@@ -83,11 +93,21 @@ string RowTransposition::decrypt(const string& cipherText)
 	int index = 0;
 	for (int i = 0; i < secretKey.size(); i++){
 		col = (secretKey[i] - '0') - 1;
-		for (int j = 0; j < rows; j++, index ++){
+		for (int j = 0; j < rows; j++, index++){
 			if (index < sanitizedText.size())
 				charMatrix[j][col] = sanitizedText[index];
 		}
 	}
+
+    /*
+    for(int i = 0; i < rows; i++)
+    {
+        cout << endl;
+        for (int j = 0; j < secretKey.size(); j++)
+            cout << charMatrix[i][j] << " ";
+    }
+    */
+
 
 	for (int i = 0; i < rows; i++){
 		for (int j = 0; j < secretKey.size(); j++, index++){

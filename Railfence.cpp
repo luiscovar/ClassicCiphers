@@ -46,12 +46,14 @@ string Railfence::encrypt(const string& plaintext)
 		}
 	}
 
+    /*
 	for (int i = 0; i < depth; i++){
 		for (int j = 0; j < col; j++, index++){
 			cout <<  charMatrix[i][j] << " ";
 		}
 		cout << endl;
 	}
+    */
 
 	for (int i = 0; i < depth; i++){
 		for (int j = 0; j < col; j++){
@@ -103,12 +105,14 @@ string Railfence::decrypt(const string& cipherText)
 		}
 	}
 
+    /*
 	for (int i = 0; i < depth; i++){
 		for (int j = 0; j < col; j++, index++){
 			cout <<  charMatrix[i][j] << " ";
 		}
 		cout << endl;
 	}
+    */
 
 	for (int i = 0; i < col; i++){
 		for (int j = 0; j < depth; j++, index++){
